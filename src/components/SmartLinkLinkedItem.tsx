@@ -37,10 +37,15 @@ export const SmartLinkLinkedItem: FC<SmartLinkLinkedItemProps> = ({ item }) => {
     : null;
 
   return (
-    <div className="bg-blue-100 rounded-lg shadow-lg p-8 mt-6">
+    <div className="bg-blue-100 rounded-lg shadow-lg p-8 mt-6"
+      data-kontent-item-id={item.system.id}
+
+    >
       {/* Title */}
       {item.elements.title.value && (
-        <div className="mb-8 border-2 border-blue-200 rounded-lg p-6">
+        <div className="mb-8 border-2 border-blue-200 rounded-lg p-6"
+          data-kontent-element-codename={'title'}
+        >
           <p className="text-gray-700 text-lg leading-relaxed">
             {item.elements.title.value}
           </p>
@@ -49,7 +54,9 @@ export const SmartLinkLinkedItem: FC<SmartLinkLinkedItemProps> = ({ item }) => {
 
       {/* Rich Text */}
       {item.elements.rich_text.value && richTextContent && (
-        <div className="mb-8 border-2 border-green-200 rounded-lg p-6">
+        <div className="mb-8 border-2 border-green-200 rounded-lg p-6"
+          data-kontent-element-codename={'rich_text'}
+        >
           <div className="prose prose-gray max-w-none">
             <PortableText value={richTextContent} components={createComponents(item.elements.rich_text)} />
           </div>
@@ -58,7 +65,9 @@ export const SmartLinkLinkedItem: FC<SmartLinkLinkedItemProps> = ({ item }) => {
 
       {/* Linked Items Summary */}
       {item.elements.linked_items.value && item.elements.linked_items.value.length > 0 && (
-        <div className="mb-8 border-2 border-purple-200 rounded-lg p-6">
+        <div className="mb-8 border-2 border-purple-200 rounded-lg p-6"
+          data-kontent-element-codename={'linked_items'}
+        >
           <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
             <span className="w-3 h-3 bg-purple-500 rounded-full mr-2"></span>
             Linked Items

@@ -7,6 +7,7 @@ import { SmartLinkLinkedItem } from './SmartLinkLinkedItem';
 import { isSmartLinkComponentType, isSmartLinkLinkedItemType, type SmartLinkLinkedItemType } from '../../models/types';
 import { SmartLinkComponent } from './SmartLinkComponent';
 import type { CoreType } from '../../models/system';
+import { useSmartLink } from '../contexts/SmartLinkContext';
 
 interface SmartLinkTestItemProps {
   item: SmartLinkParentItem;
@@ -34,16 +35,23 @@ const createComponents = (richElement: Elements.RichTextElement<CoreType>): Port
 
 export const SmartLinkParentComponent: FC<SmartLinkTestItemProps> = ({ item }) => {
   console.log(item);
+
+  const smartLink = useSmartLink();
+  console.log(smartLink);
   // Transform rich text to portable text for rendering
   const richTextContent = item.elements.test_rich_text.value
     ? transformToPortableText(item.elements.test_rich_text.value)
     : null;
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-8 mt-6">
+    <div className="bg-white rounded-lg shadow-lg p-8 mt-6"
+      data-kontent-item-id={item.system.id}
+    >
       {/* Test Text */}
       {item.elements.test_text.value && (
-        <div className="mb-8 border-2 border-blue-200 rounded-lg p-6">
+        <div className="mb-8 border-2 border-blue-200 rounded-lg p-6"
+          data-kontent-element-codename={'test_text'}
+        >
           <p className="text-gray-700 text-lg leading-relaxed">
             {item.elements.test_text.value}
           </p>
@@ -52,7 +60,9 @@ export const SmartLinkParentComponent: FC<SmartLinkTestItemProps> = ({ item }) =
 
       {/* Test Rich Text */}
       {item.elements.test_rich_text.value && richTextContent && (
-        <div className="mb-8 border-2 border-green-200 rounded-lg p-6">
+        <div className="mb-8 border-2 border-green-200 rounded-lg p-6"
+          data-kontent-element-codename={'test_rich_text'}
+        >
           <div className="prose prose-gray max-w-none">
             <PortableText value={richTextContent} components={createComponents(item.elements.test_rich_text)} />
           </div>
@@ -61,7 +71,9 @@ export const SmartLinkParentComponent: FC<SmartLinkTestItemProps> = ({ item }) =
 
       {/* Test Linked Items Summary */}
       {item.elements.test_linked_items.value && item.elements.test_linked_items.value.length > 0 && (
-        <div className="mb-8 border-2 border-purple-200 rounded-lg p-6">
+        <div className="mb-8 border-2 border-purple-200 rounded-lg p-6"
+          data-kontent-element-codename={'test_linked_items'}
+        >
           <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
             <span className="w-3 h-3 bg-purple-500 rounded-full mr-2"></span>
             Test Linked Items
