@@ -2,15 +2,13 @@ import { type FC } from 'react';;
 import { transformToPortableText } from '@kontent-ai/rich-text-resolver';
 import { PortableText, type PortableTextReactResolvers } from "@kontent-ai/rich-text-resolver/utils/react";
 import type { Elements } from '@kontent-ai/delivery-sdk';
-import type { SmartLinkParentItem } from '../../models/content-types/smart_link_parent_item';
 import { SmartLinkLinkedItem } from './SmartLinkLinkedItem';
-import { isSmartLinkComponentType, isSmartLinkLinkedItemType, type SmartLinkLinkedItemType } from '../../models/types';
+import { isSmartLinkComponentType, isSmartLinkLinkedItemType, type SmartLinkComponentType, type SmartLinkLinkedItemType, type SmartLinkParentItemType } from '../../models/types';
 import { SmartLinkComponent } from './SmartLinkComponent';
 import type { CoreType } from '../../models/system';
-import { useSmartLink } from '../contexts/SmartLinkContext';
 
 interface SmartLinkTestItemProps {
-  item: SmartLinkParentItem;
+  item: SmartLinkParentItemType;
 }
 
 const createComponents = (richElement: Elements.RichTextElement<CoreType>): PortableTextReactResolvers => {
@@ -22,7 +20,7 @@ const createComponents = (richElement: Elements.RichTextElement<CoreType>): Port
           return <div>Not found Component or item: {value.componentOrItem._ref}</div>;
         }
         if (isSmartLinkComponentType(item)) {
-          return <SmartLinkComponent item={item as SmartLinkParentItem} />;
+          return <SmartLinkComponent item={item as SmartLinkComponentType} />;
         }
         if (isSmartLinkLinkedItemType(item)) {
           return <SmartLinkLinkedItem item={item as SmartLinkLinkedItemType} />;
@@ -34,10 +32,7 @@ const createComponents = (richElement: Elements.RichTextElement<CoreType>): Port
 };
 
 export const SmartLinkParentComponent: FC<SmartLinkTestItemProps> = ({ item }) => {
-  console.log(item);
 
-  const smartLink = useSmartLink();
-  console.log(smartLink);
   // Transform rich text to portable text for rendering
   const richTextContent = item.elements.test_rich_text.value
     ? transformToPortableText(item.elements.test_rich_text.value)
