@@ -74,11 +74,10 @@ export const SmartLinkComponent: FC<SmartLinkComponentProps> = ({ item }) => {
             <span className="w-3 h-3 bg-purple-500 rounded-full mr-2"></span>
             Linked Items
           </h2>
-          <p className="text-gray-700">
-            This item has {item.elements.linked_items.value.length} linked item(s).
-          </p>
-          <div className="mt-4 text-sm text-gray-600">
-            <p>Linked items are referenced but detailed display is handled by the parent application.</p>
+          <div className="flex flex-col gap-4">
+            {item.elements.linked_items.linkedItems.map((linkedItem) => (
+              <SmartLinkLinkedItem key={linkedItem.system.id} item={linkedItem as SmartLinkLinkedItemType} />
+            ))}
           </div>
         </div>
       )}
