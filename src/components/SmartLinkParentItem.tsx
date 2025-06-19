@@ -64,22 +64,19 @@ export const SmartLinkParentComponent: FC<SmartLinkTestItemProps> = ({ item }) =
         </div>
       )}
 
-      {/* Test Linked Items Summary */}
-      {item.elements.test_linked_items.value && item.elements.test_linked_items.value.length > 0 && (
-        <div className="mb-8 border-2 border-purple-200 rounded-lg p-6"
-          data-kontent-element-codename={'test_linked_items'}
-        >
-          <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-            <span className="w-3 h-3 bg-purple-500 rounded-full mr-2"></span>
-            Test Linked Items
-          </h2>
-          <div className="flex flex-col gap-4">
-            {item.elements.test_linked_items.linkedItems.map((linkedItem) => (
-              <SmartLinkLinkedItem key={linkedItem.system.id} item={linkedItem as SmartLinkLinkedItemType} />
-            ))}
-          </div>
+      <div className="mb-8 border-2 border-purple-200 rounded-lg p-6"
+        data-kontent-element-codename={'test_linked_items'}
+      >
+        <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+          <span className="w-3 h-3 bg-purple-500 rounded-full mr-2"></span>
+          Test Linked Items
+        </h2>
+        <div className="flex flex-col gap-4">
+          {item.elements.test_linked_items.linkedItems.map((linkedItem) => (
+            <SmartLinkLinkedItem key={linkedItem.system.id} item={linkedItem as SmartLinkLinkedItemType} />
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };
