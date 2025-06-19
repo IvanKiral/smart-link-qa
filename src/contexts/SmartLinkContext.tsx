@@ -18,7 +18,7 @@ export const SmartLinkProvider: React.FC<PropsWithChildren> = ({ children }) => 
     const instance = KontentSmartLink.initialize({
       queryParam: 'preview',
       defaultDataAttributes: {
-        environmentId: import.meta.env.VITE_KONTENT_ENV_ID,
+        projectId: import.meta.env.VITE_KONTENT_ENV_ID,
         languageCodename: "default",
       },
       debug: true,
