@@ -1,54 +1,60 @@
-# React + TypeScript + Vite
+# Kontent.ai Smart Link React Demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a React + TypeScript + Vite application demonstrating Kontent.ai Smart Link functionality for live preview and in-context editing.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 1. Install Dependencies
 
-## Expanding the ESLint configuration
+First, install the project dependencies:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm ci
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Import Project Data
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Import the project structure and content from the backup using npx:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npx @kontent-ai/data-ops@latest environment restore -e <env-id> -k <mapi-key> --fileName=backup/project.zip
 ```
+
+### 3. Configure Environment Variables
+
+1. Create a `.env` file in the project root
+2. Copy the following template and fill in your actual values:
+
+```env
+# Kontent.ai Environment Configuration
+VITE_KONTENT_ENV_ID=your-environment-id-here
+VITE_KONTENT_DELIVERY_KEY=your-delivery-api-key-here
+```
+
+**Where to find these values:**
+- **Environment ID**: Go to your Kontent.ai project → Environment settings → API keys
+- **Delivery API Key**: Use your Preview API key for live preview functionality
+
+### 4. Run the Development Server
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The application will start on `https://localhost:5173` (note: HTTPS is required for Smart Link functionality).
+
+### 5. Test in Kontent.ai Live Preview
+
+1. In your Kontent.ai project, go to the content item you want to preview
+2. Click the "Preview" button 
+3. Set up your Live Preview URL to point to: `https://localhost:5173?preview=true`
+4. You should now see the Smart Link overlays and be able to edit content in context
+
+
+## Development Notes
+
+- The app uses Vite with basic SSL to serve HTTPS locally (required for Smart Link)
+- Content models are auto-generated using `@kontent-ai/model-generator`
+- Smart Link is initialized in the `SmartLinkContext` provider
